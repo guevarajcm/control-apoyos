@@ -1,0 +1,100 @@
+/* Estilos básicos */
+html, body {
+  height: 100%;
+  font-family: "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+}
+
+/* Estilo para el contenedor principal */
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Centrar el contenido */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  flex: 1;
+}
+
+/* Título */
+h1 {
+  font-weight: bold;
+  color: #1b5e20;
+  margin-bottom: 1.5rem;
+}
+
+/* Formulario */
+form {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+/* Etiquetas */
+.form-label {
+  font-weight: bold;
+  color: #1b5e20;
+}
+
+/* Campos del formulario */
+.form-control {
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+
+.form-control:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+}
+
+/* Estilo general para los botones */
+.btn {
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+/* Botón de inicio de sesión */
+.btn-primary {
+  background-color: #3498db;
+  border: none;
+  font-weight: bold;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #1a8fd8;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Mensaje de error */
+.alert-danger {
+  font-weight: bold;
+  color: #b71c1c;
+  background-color: #f8bdba;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Estilo para el pie de página */
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  background-color: #f5f5f5;
+}
+
+/* Estilo para el logotipo en el pie de página */
+footer img {
+  width: 10%; /* Ajusta el ancho del logotipo al 50% de su tamaño original */
+  height: auto; /* Mantiene la relación de aspecto del logotipo */
+}
