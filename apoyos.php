@@ -202,29 +202,32 @@ while($row = $result->fetch_assoc()) {
   });
 </script>
 <script>
-  // Mostrar alerta de error
-  if (getCookie("error")) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: getCookie("error"),
-      timer: 5000,
-      showConfirmButton: false,
-    });
-    document.cookie = "error=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  }
+ // Mostrar alerta de error
+if (getCookie("error")) {
+  const decodedError = decodeURIComponent(getCookie("error"));
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: decodedError,
+    timer: 5000,
+    showConfirmButton: false,
+  });
+  document.cookie = "error=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
 
   // Mostrar alerta de éxito
-  if (getCookie("success")) {
-    Swal.fire({
-      icon: "success",
-      title: "Éxito",
-      text: getCookie("success"),
-      timer: 5000,
-      showConfirmButton: false,
-    });
-    document.cookie = "success=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  }
+if (getCookie("success")) {
+  const successMessage = decodeURIComponent(getCookie("success"));
+  Swal.fire({
+    icon: "success",
+    title: "Éxito",
+    text: successMessage,
+    timer: 5000,
+    showConfirmButton: false,
+  });
+  document.cookie = "success=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
 
   // Función para obtener el valor de una cookie
   function getCookie(name) {
