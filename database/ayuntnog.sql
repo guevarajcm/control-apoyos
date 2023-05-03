@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-05-2023 a las 17:05:29
+-- Tiempo de generación: 03-05-2023 a las 07:51:16
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.11
 
@@ -34,19 +34,12 @@ CREATE TABLE `apoyos` (
   `monto_apoyo` decimal(10,2) NOT NULL,
   `motivo_apoyo` varchar(255) NOT NULL,
   `departamento` varchar(255) NOT NULL,
-  `fecha` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `apoyos`
---
-
-INSERT INTO `apoyos` (`id`, `nombre`, `curp`, `monto_apoyo`, `motivo_apoyo`, `departamento`, `fecha`) VALUES
-(1, 'Juan Guevara', 'GUMJ000126HVZVRNA6', '1250.00', 'Medicinas', 'Tesoreria', '2023-04-30'),
-(2, 'Edgar Lopez', 'LOCE991227HVZVRNA7', '1500.00', 'Deudas', 'Presidencia', '2023-05-01'),
-(3, 'xdxdxd', 'xdxd', '1.00', 'xdxd', 'a', '2023-04-03'),
-(4, 'prueba3', 'sikfjsdk', '2000.00', 'señoritasnocturnas', 'quejas', '2023-04-04'),
-(5, 'pruebna 4', '1124154', '111.00', 'xdxd', 'si', '2023-05-09');
+  `fecha` date NOT NULL,
+  `categoria` varchar(255) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `telefono` bigint(20) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ;
 
 -- --------------------------------------------------------
 
@@ -92,7 +85,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `apoyos`
 --
 ALTER TABLE `apoyos`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
