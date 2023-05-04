@@ -26,7 +26,7 @@ main {
 
 .container {
   position: relative;
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 20px;
   display: flex;
@@ -68,6 +68,8 @@ main {
 
 /* Estilos para la tabla */
 .table {
+  width: 100%;
+  overflow-x: auto;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-collapse: separate;
@@ -176,14 +178,19 @@ footer img {
   padding-top: 15px;
 }
 
-.logout-button-wrapper {
+.right-side-wrapper {
   position: fixed;
-  top: 10px;
-  right: 30px;
+  top: 100px;
+  right: 50px;
   z-index: 100;
 }
 
-.table-scroll {
+.logout-button-wrapper {
+  position: relative;
+  left: 20px;
+}
+
+.table-header {
   position: sticky;
     top: 0;
     background-color: white;
@@ -221,6 +228,10 @@ footer img {
 }
 
 .table-wrapper {
+  display: block;
+  width: 100%;
+  overflow-x: scroll; /* Cambiar de 'auto' a 'scroll' */
+  -webkit-overflow-scrolling: touch;
     max-height: 600px;
     overflow-y: auto;
     display: inline-block;

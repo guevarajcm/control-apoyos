@@ -1,3 +1,4 @@
+<!-- apoyos.php -->
 <?php
 session_start();
 
@@ -40,10 +41,12 @@ $result = $conn->query($sql);
 <body>
 <main>
   <div>
-<div class="logout-button-wrapper">
+<div class="right-side-wrapper">
+  <div class=logout-button-wrapper>
   <form action="logout.php" method="POST" class="me-2">
   <button type="submit" class="btn btn-logout">Cerrar sesión</button>
   </form>
+</div>
    <!-- Modal para agregar apoyo -->
  <div class="modal fade" id="addApoyoModal" tabindex="-1" aria-labelledby="addApoyoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -140,14 +143,14 @@ $result = $conn->query($sql);
 <div class="table-wrapper">
   <table class="table table-striped">
     <thead>
-    <tr class="table-scroll">
-        <th style="width: 50px;">ID</th>
+    <tr class="table-header">
+        <th style="width: 30px;">ID</th>
         <th>Nombre</th>
         <th>CURP</th>
         <th>Dirección</th>
         <th>Teléfono</th>
-        <th>Monto de Apoyo</th>
-        <th>Motivo de apoyo</th>
+        <th>Monto de <br>Apoyo</th>
+        <th>Motivo de <br>apoyo</th>
         <th>Departamento</th>
         <th>Fecha de creación</th>
         <th>Categoría</th>
