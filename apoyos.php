@@ -39,79 +39,12 @@ $result = $conn->query($sql);
  </head>
 <body>
 <main>
-  <div class="container">
-  <div class="position-fixed top-0 end-0 p-2" style="z-index: 1;">
-  <div class="bg-dark d-flex justify-content-end align-items-center">
-    <form action="logout.php" method="POST" class="me-2">
-      <button type="submit" class="btn btn-logout">Cerrar sesión</button>
-    </form>
-  </div>
-</div>
-    <h1 class="text-center mt-5 add-support-module">Apoyos otorgados</h1>
-    <?php if (isset($_SESSION['error'])): ?>
-    <div class="alert alert-danger text-center" role="alert">
-        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
-    </div>
-<?php endif; ?>
-
-<?php if (isset($_SESSION['success'])): ?>
-    <div class="alert alert-success text-center" role="alert">
-        <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
-    </div>
-<?php endif; ?>
-
-    <div class="row mt-4">
-      <div class="col-md-8 offset-md-2">
-        <form action="apoyos.php" method="GET" class="d-inline-block" id="searchForm">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Buscar" name="search" id="searchInput" value="<?php echo $search; ?>">
-            <button type="submit" class="btn btn-primary">Buscar</button>
-            <button type="button" class="btn btn-secondary" id="clearButton">Limpiar</button>
-          </div>
-        </form>
-        <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>CURP</th>
-          <th>Dirección</th>
-          <th>Teléfono</th>
-          <th>Monto de Apoyo</th>
-          <th>Motivo de Apoyo</th>
-          <th>Departamento</th>
-          <th>Fecha</th>
-          <th>Fecha de creación</th>
-          <th>Categoría</th>
-        </tr>
-      </thead>
-      <?php
-while($row = $result->fetch_assoc()) {
-  echo "<tr>";
-  echo "<td>" . $row['id'] . "</td>";
-  echo "<td>" . $row['nombre'] . "</td>";
-  echo "<td>" . $row['curp'] . "</td>";
-  echo "<td>" . $row['direccion'] . "</td>";
-  echo "<td>" . $row['telefono'] . "</td>";
-  echo "<td>" . $row['monto_apoyo'] . "</td>";
-  echo "<td>" . $row['motivo_apoyo'] . "</td>";
-  echo "<td>" . $row['departamento'] . "</td>";
-  echo "<td>" . $row['fecha'] . "</td>";
-  echo "<td>" . $row['created_at'] . "</td>";
-  echo "<td>" . $row['categoria'] . "</td>";
-  echo "</tr>";
-}
-?>
-
-      <tbody>
-        </table>
-      </div>
-    </div>
-    
-
-  </div>
-
- <!-- Modal para agregar apoyo -->
+  <div>
+<div class="logout-button-wrapper">
+  <form action="logout.php" method="POST" class="me-2">
+  <button type="submit" class="btn btn-logout">Cerrar sesión</button>
+  </form>
+   <!-- Modal para agregar apoyo -->
  <div class="modal fade" id="addApoyoModal" tabindex="-1" aria-labelledby="addApoyoModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -165,6 +98,7 @@ while($row = $result->fetch_assoc()) {
         </div>
       </div>
     </div>
+</div>
 
 
   <!-- JavaScript para mostrar el modal de agregar apoyo -->
@@ -174,6 +108,79 @@ while($row = $result->fetch_assoc()) {
       document.getElementById('nombre').focus();
     });
   </script>
+  </div>
+  <div class="container">
+  <div class="position-fixed bg-light p-3" style="z-index: 1;">
+  <div class="bg-dark d-flex justify-content-end align-items-center">
+  </div>
+</div>
+    <h1 class="text-center mt-5 add-support-module">Apoyos otorgados</h1>
+    <?php if (isset($_SESSION['error'])): ?>
+    <div class="alert alert-danger text-center" role="alert">
+        <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($_SESSION['success'])): ?>
+    <div class="alert alert-success text-center" role="alert">
+        <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
+    </div>
+<?php endif; ?>
+
+    <div class="row mt-4">
+      <div class="col-md-8 offset-md-2">
+        <form action="apoyos.php" method="GET" class="d-inline-block" id="searchForm">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Buscar" name="search" id="searchInput" value="<?php echo $search; ?>">
+            <button type="submit" class="btn btn-primary">Buscar</button>
+            <button type="button" class="btn btn-secondary" id="clearButton">Limpiar</button>
+          </div>
+        </form>
+        
+<div class="table-wrapper">
+  <table class="table table-striped">
+    <thead>
+    <tr class="table-scroll">
+        <th style="width: 50px;">ID</th>
+        <th>Nombre</th>
+        <th>CURP</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Monto de Apoyo</th>
+        <th>Motivo de apoyo</th>
+        <th>Departamento</th>
+        <th>Fecha de creación</th>
+        <th>Categoría</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      while($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row['id'] . "</td>";
+        echo "<td>" . $row['nombre'] . "</td>";
+        echo "<td>" . $row['curp'] . "</td>";
+        echo "<td>" . $row['direccion'] . "</td>";
+        echo "<td>" . $row['telefono'] . "</td>";
+        echo "<td>" . $row['monto_apoyo'] . "</td>";
+        echo "<td>" . $row['motivo_apoyo'] . "</td>";
+        echo "<td>" . $row['departamento'] . "</td>";
+        echo "<td>" . $row['created_at'] . "</td>";
+        echo "<td>" . $row['categoria'] . "</td>";
+        echo "</tr>";
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
+
+
+
+      </div>
+    </div>
+  </div>
+
+
   
   <!-- Scripts de Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-yzGdBNOg6N84CyYUgKjyLp6F/dV9UBTJpItmV7AuZjIWb2m7wMkpik89yV7MjCg+" crossorigin="anonymous"></script>
@@ -284,6 +291,5 @@ if (getCookie("success")) {
     fechaInput.value = currentDate;
   });
 </script>
-
 </body>
 </html>
