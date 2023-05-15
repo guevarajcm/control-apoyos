@@ -2,29 +2,35 @@
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  // Conectarse a la base de datos
-  $conn = new mysqli('localhost', 'root', '', 'ayuntnog');
+    // Conectarse a la base de datos
+    $conn = new mysqli('localhost', 'root', '', 'ayuntnog');
 
-  // Comprobar la conexión
-  if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-  }
+    // Comprobar la conexión
+    if ($conn->connect_error) {
+        die("Error de conexión: " . $conn->connect_error);
+    }
 
-  // Obtener los datos del formulario
-  $user = $_POST['username'];
-  $pass = $_POST['password'];
+    // Obtener los datos del formulario
+    $user = $_POST['username'];
+    $pass = $_POST['password'];
 
-  // Buscar al usuario en la base de datos
-  $sql = "SELECT * FROM users WHERE username = '$user' AND password = '$pass'";
-  $result = $conn->query($sql);
+    // Buscar al usuario en la base de datos
+    $sql = "SELECT id, password FROM users WHERE username = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $user);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
 
-  // Verificar las credenciales
-  if ($result->num_rows > 0) {
+    // Verificar las credenciales
+  if ($pass == $row['password']) {
+    $_SESSION['user_id'] = $row['id'];
     $_SESSION['username'] = $user;
     header("Location: apoyos.php");
   } else {
     $error = "Credenciales incorrectas. Por favor, inténtalo de nuevo.";
   }
+
 }
 ?>
 
@@ -65,8 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
   </div>
-  </main>
-  <footer>
+</main>
+<footer>
   <img src="images/Logo-Nogales-Footer.png" alt="Logo Nogales" />
 </footer>
 

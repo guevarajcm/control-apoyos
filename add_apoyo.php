@@ -1,5 +1,5 @@
-<!-- add_apoyo.php -->
 <?php
+session_start();  // Iniciar sesión
 
 // Conectarse a la base de datos
 $conn = new mysqli('localhost', 'root', '', 'ayuntnog');
@@ -9,9 +9,13 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
+//Obtener usuario autenticado:
+$usuario_autenticado = $_SESSION['username'] ?? '';
+
 // Obtener datos del formulario
-$nombre = $_POST['nombre'];
-$curp = $_POST['curp'];
+$curp_solicitante = $_POST['curp_solicitante'];
+$curp_receptor = $_POST['curp_receptor'];
+$curp_final = $_POST['curp_final'];
 $direccion = $_POST['direccion'];
 $telefono = $_POST['telefono'];
 $monto_apoyo = $_POST['monto_apoyo'];
@@ -34,27 +38,21 @@ function validarCURP($curp) {
 }
 
 
-// Verificar si el formato de la CURP es válido
-if (!validarCURP($curp)) {
-    setcookie('error', 'La CURP ingresada no cumple con el formato válido.', time() + 10, "/");
+// Verificar si el formato de las CURP es válido
+if (!validarCURP($curp_solicitante) || !validarCURP($curp_receptor) || !validarCURP($curp_final)) {
+    setcookie('error', 'Alguna de las CURP ingresadas no cumple con el formato válido.', time() + 10, "/");
     header("Location: apoyos.php");
     exit;
 }
 
+// Preparar la consulta para insertar el nuevo registro
+$stmt = $conn->prepare("INSERT INTO apoyos (curp_solicitante, curp_receptor, curp_final, direccion, telefono, monto_apoyo, motivo_apoyo, departamento, created_at, categoria) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-// Verificar si la CURP ya está registrada
-$check_curp = "SELECT * FROM apoyos WHERE curp = '$curp'";
-$result = $conn->query($check_curp);
-
-if ($result->num_rows > 0) {
-    setcookie('error', 'La CURP ingresada ya está registrada.', time() + 10, "/");
-    header("Location: apoyos.php");
-    exit;
+if($stmt === false) {
+    die("Error en la consulta: " . htmlspecialchars($conn->error));
 }
 
-// Preparar y ejecutar la consulta para insertar el apoyo
-$stmt = $conn->prepare("INSERT INTO apoyos (nombre, curp, direccion, telefono, monto_apoyo, motivo_apoyo, departamento, categoria) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("ssssssss", $nombre, $curp, $direccion, $telefono, $monto_apoyo, $motivo_apoyo, $departamento, $categoria);
+$stmt->bind_param("sssssissss", $curp_solicitante, $curp_receptor, $curp_final, $direccion, $telefono, $monto_apoyo, $motivo_apoyo, $departamento, $fecha, $categoria);
 
 if ($stmt->execute()) {
     setcookie('success', 'El apoyo se ha agregado correctamente.', time() + 10, "/");
