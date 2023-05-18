@@ -83,13 +83,7 @@ main {
   border-bottom: 1px solid #e0e0e0;
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-  background-color: #f5f5f5;
-}
 
-.table-striped tbody tr:nth-of-type(even) {
-  background-color: #ffffff;
-}
 
 /* Estilo para el botón de agregar apoyo */
 .btn-success {
@@ -229,11 +223,11 @@ footer img {
 
 .table-wrapper {
   display: block;
-  width: 100%;
-  overflow-x: scroll; /* Cambiar de 'auto' a 'scroll' */
-  -webkit-overflow-scrolling: touch;
+  width: 95%;
+  overflow-x: auto ;
+    -webkit-overflow-scrolling: touch;
     max-height: 600px;
     overflow-y: auto;
     display: inline-block;
-    width: 100%;
+    width: 95%;
   }

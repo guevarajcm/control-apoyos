@@ -93,10 +93,19 @@ $result = $conn->query($sql);
             <input type="date" class="form-control" id="fecha" name="fecha" required>
           </div>
           <div class="mb-3">
-          <label for="categoria" class="form-label">Categoría</label>
-            <input type="text" class="form-control" id="categoria" name="categoria" required>
-          </div>
+    <label for="categoria" class="form-label">Categoría</label>
+    <select class="form-control" id="categoria" name="categoria" required>
+        <option value="">Selecciona una categoría</option>
+        <option value="Gastos Médicos">Gastos Médicos</option>
+        <option value="Gastos Funerarios">Gastos Funerarios</option>
+        <option value="Gastos Alimenticios">Gastos Alimenticios</option>
+        <option value="Apoyos Funcionales">Apoyos Funcionales</option>
+        <option value="Otro">Otro</option>
+    </select>
+</div>
         </div>
+        <br>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
           <button type="submit" class="btn btn-success">Agregar apoyo</button>
