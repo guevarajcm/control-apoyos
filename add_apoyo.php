@@ -1,3 +1,4 @@
+<!-- apoyos.php -->
 <?php
 session_start();  // Iniciar sesión
 
@@ -8,6 +9,21 @@ $conn = new mysqli('localhost', 'root', '', 'ayuntnog');
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
+
+// Verificar si el CURP ya existe
+$check_query = "SELECT * FROM apoyos WHERE curp_solicitante = ? OR curp_receptor = ? OR curp_final = ? LIMIT 1";
+$check_stmt = $conn->prepare($check_query);
+$check_stmt->bind_param("sss", $curp_solicitante, $curp_receptor, $curp_final);
+$check_stmt->execute();
+$check_stmt->store_result();
+if ($check_stmt->num_rows > 0) {
+    // El CURP ya existe, redirigir a la página de apoyos con un mensaje de error
+    $_SESSION['error'] = "Alguna de las CURP ingresadas ya existe en el sistema.";
+    header("Location: apoyos.php");
+    exit;
+}
+$check_stmt->close();
+
 
 //Obtener usuario autenticado:
 $usuario_autenticado = $_SESSION['username'] ?? '';
@@ -44,6 +60,9 @@ if (!validarCURP($curp_solicitante) || !validarCURP($curp_receptor) || !validarC
     header("Location: apoyos.php");
     exit;
 }
+
+
+
 
 // Preparar la consulta para insertar el nuevo registro
 $stmt = $conn->prepare("INSERT INTO apoyos (curp_solicitante, curp_receptor, curp_final, direccion, telefono, monto_apoyo, motivo_apoyo, departamento, created_at, categoria) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

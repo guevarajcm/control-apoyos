@@ -54,7 +54,7 @@ $result = $conn->query($sql);
       <div class="modal-header">
         <h5 class="modal-title" id="addApoyoModalLabel">Agregar apoyo</h5>
       </div>
-      <form action="add_apoyo.php" method="POST">
+      <form id="addApoyoForm" action="add_apoyo.php" method="POST">
         <div class="modal-body">
           <div class="mb-3">
             <label for="curp_solicitante" class="form-label">CURP Solicitante</label>
@@ -311,5 +311,56 @@ if (getCookie("success")) {
     fechaInput.value = currentDate;
   });
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('#addApoyoForm').on('submit', function(e){
+    e.preventDefault();
+    var form = this;
+    
+    var curp_solicitante = $('#curp_solicitante').val();
+    var curp_receptor = $('#curp_receptor').val();
+    var curp_final = $('#curp_final').val();
+
+    $.ajax({
+      type: 'POST',
+      url: 'check_curp.php',
+      data: {curp_solicitante: curp_solicitante, curp_receptor: curp_receptor, curp_final: curp_final},
+      success: function(response) {
+        if(response == 'exists') {
+          Swal.fire({
+            title: 'Estás seguro?',
+            text: "El CURP ingresado ya existe en el sistema!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, quiero continuar!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              form.submit();
+            }
+          })
+        } else {
+          form.submit();
+        }
+      }
+    });
+  });
+});
+</script>
+
+
+
+<?php if (isset($_SESSION['error'])): ?>
+<script>
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: '<?= $_SESSION['error']; unset($_SESSION['error']); ?>'
+  })
+</script>
+<?php endif; ?>
 </body>
 </html>
