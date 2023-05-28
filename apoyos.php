@@ -33,7 +33,7 @@ $isAdmin = $user['isAdmin'] == 1 ? true : false;
 $search = '';
 if (isset($_GET['search'])) {
   $search = $_GET['search'];
-  $sql = "SELECT * FROM apoyos WHERE (id LIKE '%$search%' OR monto_apoyo LIKE '%$search%' OR motivo_apoyo LIKE '%$search%' OR departamento LIKE '%$search%' OR categoria LIKE '%$search%' OR direccion LIKE '%$search%' OR telefono LIKE '%$search%' OR created_at LIKE '%$search%' OR curp_solicitante LIKE '%$search%' OR curp_receptor LIKE '%$search%' OR curp_final LIKE '%$search%')";
+  $sql = "SELECT * FROM apoyos WHERE (id LIKE '%$search%' OR monto_apoyo LIKE '%$search%' OR motivo_apoyo LIKE '%$search%' OR departamento LIKE '%$search%' OR categoria LIKE '%$search%' OR direccion LIKE '%$search%' OR telefono LIKE '%$search%' OR created_at LIKE '%$search%' OR curp_solicitante LIKE '%$search%' OR nombre_final LIKE '%$search%' OR curp_final LIKE '%$search%')";
 } else {
   $sql = "SELECT * FROM apoyos";
 }
@@ -77,8 +77,8 @@ $result = $conn->query($sql);
             <input type="text" class="form-control" id="curp_solicitante" name="curp_solicitante" required>
           </div>
           <div class="mb-3">
-            <label for="curp_receptor" class="form-label">CURP Receptor</label>
-            <input type="text" class="form-control" id="curp_receptor" name="curp_receptor" required>
+            <label for="nombre_final" class="form-label">Nombre Final</label>
+            <input type="text" class="form-control" id="nombre_final" name="nombre_final" required>
           </div>
           <div class="mb-3">
             <label for="curp_final" class="form-label">CURP Final</label>
@@ -181,7 +181,7 @@ $result = $conn->query($sql);
     <tr class="table-header">
     <th style="width: 30px; text-align: center;">ID</th>
     <th style="text-align: center;">CURP <br>Solicitante</th>
-    <th style="text-align: center;">CURP <br>Receptor</th>
+    <th style="text-align: center;">Nombre <br>Final</th>
     <th style="text-align: center;">CURP <br>Final</th>
     <th style="text-align: center;">Dirección</th>
     <th style="text-align: center;">Teléfono</th>
@@ -190,8 +190,8 @@ $result = $conn->query($sql);
     <th style="text-align: center;">Departamento</th>
     <th style="text-align: center;">Fecha de creación</th>
     <th style="text-align: center;">Categoría</th>
-    <th style="text-align: center;">Super<br>Usuario</th>
-      </tr>
+    <?php if ($isAdmin) { echo "<th style='text-align: center;'>Super<br>Usuario</th>"; } ?>
+    </tr>
     </thead>
     <tbody>
       <?php
@@ -199,7 +199,7 @@ $result = $conn->query($sql);
         echo "<tr>";
         echo "<td>" . $row['id'] . "</td>";
         echo "<td>" . $row['curp_solicitante'] . "</td>";
-        echo "<td>" . $row['curp_receptor'] . "</td>";
+        echo "<td>" . $row['nombre_final'] . "</td>";
         echo "<td>" . $row['curp_final'] . "</td>";
         echo "<td>" . $row['direccion'] . "</td>";
         echo "<td>" . $row['telefono'] . "</td>";
@@ -345,13 +345,12 @@ $(document).ready(function(){
     var form = this;
     
     var curp_solicitante = $('#curp_solicitante').val();
-    var curp_receptor = $('#curp_receptor').val();
     var curp_final = $('#curp_final').val();
 
     $.ajax({
       type: 'POST',
       url: 'check_curp.php',
-      data: {curp_solicitante: curp_solicitante, curp_receptor: curp_receptor, curp_final: curp_final},
+      data: {curp_solicitante: curp_solicitante, curp_final: curp_final},
       success: function(response) {
         if(response == 'exists') {
           Swal.fire({

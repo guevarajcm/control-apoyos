@@ -30,7 +30,7 @@ $row = $result->fetch_assoc();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // actualizar los datos de la fila
   $curp_solicitante = $_POST['curp_solicitante'];
-  $curp_receptor = $_POST['curp_receptor'];
+  $nombre_final = $_POST['nombre_final'];
   $curp_final = $_POST['curp_final'];
   $direccion = $_POST['direccion'];
   $telefono = $_POST['telefono'];
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $categoria = $_POST['categoria'];
   $created_at = $_POST['created_at'];
 
-  $query = "UPDATE apoyos SET curp_solicitante='$curp_solicitante', curp_receptor='$curp_receptor', 
+  $query = "UPDATE apoyos SET curp_solicitante='$curp_solicitante', nombre_final='$nombre_final', 
   curp_final='$curp_final', direccion='$direccion', telefono='$telefono', 
   monto_apoyo='$monto_apoyo', motivo_apoyo='$motivo_apoyo', departamento='$departamento', 
   categoria='$categoria', created_at='$created_at' WHERE id=$id";
@@ -51,10 +51,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   header('Location: apoyos.php');
 } else {
   // Mostrar el formulario de edición
+  $created_at = date('Y-m-d\TH:i:s', strtotime($row['created_at'])); // Formatear la fecha y hora con segundos
   ?>
   <form method="POST">
     CURP Solicitante: <input type="text" name="curp_solicitante" value="<?php echo $row['curp_solicitante']; ?>"><br>
-    CURP Receptor: <input type="text" name="curp_receptor" value="<?php echo $row['curp_receptor']; ?>"><br>
+    Nombre Final: <input type="text" name="nombre_final" value="<?php echo $row['nombre_final']; ?>"><br>
     CURP Final: <input type="text" name="curp_final" value="<?php echo $row['curp_final']; ?>"><br>
     Dirección: <input type="text" name="direccion" value="<?php echo $row['direccion']; ?>"><br>
     Teléfono: <input type="text" name="telefono" value="<?php echo $row['telefono']; ?>"><br>
@@ -62,8 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Motivo de apoyo: <input type="text" name="motivo_apoyo" value="<?php echo $row['motivo_apoyo']; ?>"><br>
     Departamento: <input type="text" name="departamento" value="<?php echo $row['departamento']; ?>"><br>
     Categoría: <input type="text" name="categoria" value="<?php echo $row['categoria']; ?>"><br>
-    Fecha de Creación: <input type="datetime-local" name="created_at" value="<?php echo $row['created_at']; ?>"><br>
-    <div class="button-container">
+    Fecha de Creación: <input type="datetime-local" name="created_at" value="<?php echo $created_at; ?>"><br>
+        <div class="button-container">
         <button type="submit">Guardar</button>&nbsp;&nbsp;&nbsp;
         <button type="button" onclick="location.href='apoyos.php';">Cancelar</button>
       </div>
