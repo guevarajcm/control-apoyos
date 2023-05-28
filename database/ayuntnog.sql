@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-05-2023 a las 07:51:16
+-- Tiempo de generación: 22-05-2023 a las 19:17:04
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.11
 
@@ -29,16 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `apoyos` (
   `id` int(11) UNSIGNED NOT NULL,
-  `nombre` varchar(255) NOT NULL,
-  `curp` char(18) NOT NULL,
   `monto_apoyo` decimal(10,2) NOT NULL,
   `motivo_apoyo` varchar(255) NOT NULL,
   `departamento` varchar(255) NOT NULL,
-  `fecha` date NOT NULL,
   `categoria` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) DEFAULT NULL,
   `telefono` bigint(20) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `curp_solicitante` varchar(18) DEFAULT NULL,
+  `curp_receptor` varchar(18) DEFAULT NULL,
+  `curp_final` varchar(18) DEFAULT NULL
 ) ;
 
 -- --------------------------------------------------------

@@ -16,6 +16,20 @@ if ($conn->connect_error) {
   die("Error de conexión: " . $conn->connect_error);
 }
 
+// Obtener los detalles del usuario
+$username = $_SESSION['username'];
+$sql = "SELECT isAdmin FROM users WHERE username = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('s', $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+// Verificar si el usuario es administrador
+$isAdmin = $user['isAdmin'] == 1 ? true : false;
+
+
+
 $search = '';
 if (isset($_GET['search'])) {
   $search = $_GET['search'];
@@ -34,6 +48,7 @@ $result = $conn->query($sql);
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/1L_dstPt3HV5HzF6GVdgv2Q6ISCOgvG9W6yT7a" crossorigin="anonymous">
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="styles/style2.css">
   <link rel="icon" href="images/favicon.ico" type="image/ico">
   <title>Apoyos otorgados</title>
@@ -174,6 +189,7 @@ $result = $conn->query($sql);
         <th>Departamento</th>
         <th>Fecha de creación</th>
         <th>Categoría</th>
+        <th>Super<br>Usuario</th>
       </tr>
     </thead>
     <tbody>
@@ -191,6 +207,14 @@ $result = $conn->query($sql);
         echo "<td>" . $row['departamento'] . "</td>";
         echo "<td>" . $row['created_at'] . "</td>";
         echo "<td>" . $row['categoria'] . "</td>";
+        if ($isAdmin) {
+          echo "<td>";
+          echo "<a href='edit.php?id=".$row['id']."' class='btn btn-info' style='display: inline-block;'><i class='fas fa-pencil-alt'></i></a>&nbsp;&nbsp;&nbsp;";
+          echo "<a href='delete.php?id=".$row['id']."' class='btn btn-danger' style='display: inline-block;'><i class='fas fa-trash-alt'></i></a>";
+          echo "</td>";
+        } else {
+          echo "<td></td>";
+        }      
         echo "</tr>";
       }
       ?>
