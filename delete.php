@@ -10,20 +10,16 @@ if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
 
-  $id = $_GET['id'];
+$id = $_GET['id'];
 
+// eliminar la fila con esta id de la base de datos
+$query = "DELETE FROM apoyos WHERE id = $id";
 
-
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // eliminar la fila con esta id de la base de datos
-    $query = "DELETE FROM apoyos WHERE id = $id";
-    $conn->query($query);
-
+if($conn->query($query) === TRUE){
     // Redirige de vuelta a la página original
     header('Location: apoyos.php');
-  } else {
-    // mostrar una confirmación antes de la eliminación
-    echo "¿Estás seguro de que quieres eliminar esta fila?";
-    echo "<form method='POST'><button type='submit'>Sí, eliminar</button></form>";
-  }
+} else {
+    echo "Error al eliminar el registro: " . $conn->error;
+}
+$conn->close();
 ?>

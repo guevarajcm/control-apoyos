@@ -1,4 +1,14 @@
 <!-- edit.php -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Apoyo</title>
+  <link rel="stylesheet" href="styles/style3.css">
+</head>
+<body>
+  <div class="container">
+
 <?php
 session_start();  // Iniciar sesión
 
@@ -53,9 +63,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Departamento: <input type="text" name="departamento" value="<?php echo $row['departamento']; ?>"><br>
     Categoría: <input type="text" name="categoria" value="<?php echo $row['categoria']; ?>"><br>
     Fecha de Creación: <input type="datetime-local" name="created_at" value="<?php echo $row['created_at']; ?>"><br>
-    <button type="submit">Guardar</button>
-    <button type="button" onclick="location.href='apoyos.php';">Cancelar</button>
+    <div class="button-container">
+        <button type="submit">Guardar</button>&nbsp;&nbsp;&nbsp;
+        <button type="button" onclick="location.href='apoyos.php';">Cancelar</button>
+      </div>
   </form>
+</div>
   <?php
 }
 ?>
+
+</body>
+<footer>
+    <img src="images/Logo-Nogales-Footer.png" alt="Logo Nogales" />
+  </footer>
+</html>

@@ -179,18 +179,18 @@ $result = $conn->query($sql);
   <table class="table table-striped">
     <thead>
     <tr class="table-header">
-        <th style="width: 30px;">ID</th>
-        <th>CURP <br>Solicitante</th>
-        <th>CURP <br>Receptor</th>
-        <th>CURP <br>Final</th>
-        <th>Dirección</th>
-        <th>Teléfono</th>
-        <th>Monto de <br>Apoyo</th>
-        <th>Motivo de <br>apoyo</th>
-        <th>Departamento</th>
-        <th>Fecha de creación</th>
-        <th>Categoría</th>
-        <th>Super<br>Usuario</th>
+    <th style="width: 30px; text-align: center;">ID</th>
+    <th style="text-align: center;">CURP <br>Solicitante</th>
+    <th style="text-align: center;">CURP <br>Receptor</th>
+    <th style="text-align: center;">CURP <br>Final</th>
+    <th style="text-align: center;">Dirección</th>
+    <th style="text-align: center;">Teléfono</th>
+    <th style="text-align: center;">Monto de <br>apoyo(mxn)</th>
+    <th style="text-align: center;">Motivo de <br>apoyo</th>
+    <th style="text-align: center;">Departamento</th>
+    <th style="text-align: center;">Fecha de creación</th>
+    <th style="text-align: center;">Categoría</th>
+    <th style="text-align: center;">Super<br>Usuario</th>
       </tr>
     </thead>
     <tbody>
@@ -211,7 +211,7 @@ $result = $conn->query($sql);
         if ($isAdmin) {
           echo "<td>";
           echo "<a href='edit.php?id=".$row['id']."' class='btn btn-info' style='display: inline-block;'><i class='fas fa-pencil-alt'></i></a>&nbsp;&nbsp;&nbsp;";
-          echo "<a href='delete.php?id=".$row['id']."' class='btn btn-danger' style='display: inline-block;'><i class='fas fa-trash-alt'></i></a>";
+          echo "<a href='#' class='btn btn-danger delete-btn' data-id='".$row['id']."' style='display: inline-block;'><i class='fas fa-trash-alt'></i></a>";
           echo "</td>";
         } else {
           echo "<td></td>";
@@ -376,6 +376,30 @@ $(document).ready(function(){
 });
 </script>
 
+<script>
+document.querySelectorAll('.delete-btn').forEach(function(button) {
+  button.addEventListener('click', function(e) {
+    e.preventDefault();
+    const id = this.getAttribute('data-id');
+    
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "No podrás revertir esta acción",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Redirect to the delete script with the ID as a parameter
+        window.location.href = 'delete.php?id=' + id;
+      }
+    });
+  });
+});
+</script>
 
 
 <?php if (isset($_SESSION['error'])): ?>
