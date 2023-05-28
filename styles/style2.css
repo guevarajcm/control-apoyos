@@ -223,11 +223,11 @@ footer img {
 
 .table-wrapper {
   display: block;
-  width: 95%;
-  overflow-x: auto ;
-    -webkit-overflow-scrolling: touch;
-    max-height: 600px;
-    overflow-y: auto;
-    display: inline-block;
-    width: 95%;
-  }
+  max-width: 75%; 
+  overflow-x: auto; 
+  -webkit-overflow-scrolling: touch; 
+  max-height: 600px;
+  overflow-y: auto;
+  margin-left: auto;  /* Centra la tabla horizontalmente */
+  margin-right: auto; /* Centra la tabla horizontalmente */
+}

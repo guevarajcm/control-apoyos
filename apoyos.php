@@ -33,10 +33,11 @@ $isAdmin = $user['isAdmin'] == 1 ? true : false;
 $search = '';
 if (isset($_GET['search'])) {
   $search = $_GET['search'];
-  $sql = "SELECT * FROM apoyos WHERE (nombre LIKE '%$search%' OR curp_solicitante LIKE '%$search%' OR curp_receptor LIKE '%$search%' OR curp_final LIKE '%$search%' OR motivo_apoyo LIKE '%$search%' OR departamento LIKE '%$search%')";
+  $sql = "SELECT * FROM apoyos WHERE (id LIKE '%$search%' OR monto_apoyo LIKE '%$search%' OR motivo_apoyo LIKE '%$search%' OR departamento LIKE '%$search%' OR categoria LIKE '%$search%' OR direccion LIKE '%$search%' OR telefono LIKE '%$search%' OR created_at LIKE '%$search%' OR curp_solicitante LIKE '%$search%' OR curp_receptor LIKE '%$search%' OR curp_final LIKE '%$search%')";
 } else {
   $sql = "SELECT * FROM apoyos";
 }
+
 
 $result = $conn->query($sql);
 ?>
